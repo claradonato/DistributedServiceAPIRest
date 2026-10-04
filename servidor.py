@@ -18,7 +18,7 @@ def gerenciar_usuarios():
         dados = request.get_json() or {}
         nome = dados.get("nome")
 
-        if not nome:
+        if not nome: #transforma o dicionário em json e já retorna o cabeçalho HTTP
             return jsonify({"erro": "O campo 'nome' é obrigatório."}), 400
 
         if nome in usuarios:
@@ -33,6 +33,35 @@ def gerenciar_usuarios():
     
     elif request.method == "GET":
         return jsonify(list(usuarios.values())), 200
+
+# ROTA 2: Envio e consulta de coleção de mensagens ----------------------------
+@app.route("/mensagens", methods=["POST", "GET"])
+def gerenciar_mensagens():
+    global contador_mensagem_id
+
+    if request.method == "POST":
+        dados = request.get_json() or {}
+        remetente = dados.get("remetente")
+        destinatario = dados.get("destinatario")
+        conteudo = dados.get("conteudo")
+
+        if not remetente or not destinatario or not conteudo:
+            return jsonify({"erro": "Campos 'remetente', 'destinatario', e 'conteudo' são obrigatórios."}), 400
+
+        nova_mensagem = {
+            "id": contador_mensagem_id,
+            "remetente": remetente,
+            "destinatario": destinatario,
+            "conteudo": conteudo,
+            "lida": False
+        }
+
+        mensagens.append(nova_mensagem)
+        print(f"[LOG SERVIDOR] Mensagem #{contador_mensagem_id} de '{remetente}' para '{destinatario}' registrada.")
+        contador_mensagem_id += 1
+
+        return jsonify(nova_mensagem), 201
+
 
 # Execução do servidor Flask na porta 5000 escutando em todas as interfaces de rede
 if __name__ == "__main__":
