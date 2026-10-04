@@ -11,3 +11,11 @@ Funciona como um contrato de interoperabilidade.
 
 ## Dicionários e Listas
 Servem para manter o estado da aplicação em totalmente em memória, já que não foi solicitado que utilizasse um banco de dados persistente.
+
+## Bibliotecas e funções
+**Request**:
+- serve para fazer requisições HTTP de forma simples, rápida e intuitiva; 
+- consegue conversar com servidores web, consumir APIs, baixar arquivos e extrair dados; 
+- lida com dados em formato JSON.
+
+**Jsonify**: origina do flask e é uma função usada para converter estruturas de dados nativos do python em formato de resposta JSON adequado para a API.
