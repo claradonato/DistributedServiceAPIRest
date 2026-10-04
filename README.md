@@ -19,3 +19,8 @@ Servem para manter o estado da aplicação em totalmente em memória, já que n�
 - lida com dados em formato JSON.
 
 **Jsonify**: origina do flask e é uma função usada para converter estruturas de dados nativos do python em formato de resposta JSON adequado para a API.
+
+## Dockerfile
+Define como o ambiente da aplicação é montado do zero, empacotando o python e a biblioteca flask
+
+**Dockerfile do servidor**: "EXPOSE 5000 + WORKDIR /app": organiza a estrutura interna do contâiner e sinaliza que o serviço vai disponibilizar a API na porta 5000.
