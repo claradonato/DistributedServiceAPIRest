@@ -61,8 +61,25 @@ def gerenciar_mensagens():
         contador_mensagem_id += 1
 
         return jsonify(nova_mensagem), 201
+    elif request.method == "GET":
+        destinatario_filtro = request.args.get("destinatario")
+        remetente_filtro = request.args.get("remetente")
+        lida_filtro = request.args.get("lida");
 
+        resultado = mensagens
 
+        if destinatario_filtro:
+            resultado = [m for m in resultado if m["destinatario"] == destinatario_filtro]
+
+        if remetente_filtro:
+            resultado = [m for m in resultado if m["remetente"] == remetente_filtro]
+
+        if lida_filtro is not None:
+            is_lida = lida_filtro.lower() == "true"
+            resultado = [m for m in resultado if m["lida"] == is_lida]
+
+        return jsonify(resultado), 200
+    
 # Execução do servidor Flask na porta 5000 escutando em todas as interfaces de rede
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
