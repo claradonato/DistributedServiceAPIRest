@@ -79,6 +79,23 @@ def gerenciar_mensagens():
             resultado = [m for m in resultado if m["lida"] == is_lida]
 
         return jsonify(resultado), 200
+
+# ROTA 3: Atualização de mensagem específica -------------------------------------
+@app.route("/mensagens/<int: id_mensagem>", methods = ["PATCH"])
+def atualizar_mensagem(id_mensagem: int):
+    mensagem = next((m for m in mensagens if m["id"] == id_mensagem), None)
+
+    if not mensagem:
+        return jsonify({"erro": f"Mensagem id #{id_mensagem} não encontrada."}), 404
+
+    dados = request.get_json() or {}
+
+    # altera o atributo "lida"
+    if "lida" in dados:
+        mensagem["lida"] == bool(dados["lida"])
+        print(f"[LOG SERVIDOR] Mensagem #{id_mensagem} marcada como lida={mensagem['lida']}")
+
+    return jsonify(mensagem), 200
     
 # Execução do servidor Flask na porta 5000 escutando em todas as interfaces de rede
 if __name__ == "__main__":
