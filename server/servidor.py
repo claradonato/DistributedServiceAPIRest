@@ -81,7 +81,7 @@ def gerenciar_mensagens():
         return jsonify(resultado), 200
 
 # ROTA 3: Atualização de mensagem específica -------------------------------------
-@app.route("/mensagens/<int: id_mensagem>", methods = ["PATCH"])
+@app.route("/mensagens/<int:id_mensagem>", methods = ["PATCH"])
 def atualizar_mensagem(id_mensagem: int):
     mensagem = next((m for m in mensagens if m["id"] == id_mensagem), None)
 
@@ -92,7 +92,7 @@ def atualizar_mensagem(id_mensagem: int):
 
     # altera o atributo "lida"
     if "lida" in dados:
-        mensagem["lida"] == bool(dados["lida"])
+        mensagem["lida"] = bool(dados["lida"])
         print(f"[LOG SERVIDOR] Mensagem #{id_mensagem} marcada como lida={mensagem['lida']}")
 
     return jsonify(mensagem), 200

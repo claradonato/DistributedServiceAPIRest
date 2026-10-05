@@ -1,0 +1,33 @@
+services:
+  servidor:
+    build:
+      context: ./server
+    ports:
+      - "5000:5000"
+
+  cliente_alice:
+    build:
+      context: ./client
+    environment:
+      NOME_CLIENTE: Alice
+      SERVER_URL: http://servidor:5000
+    depends_on:
+      - servidor
+
+  cliente_bob:
+    build:
+      context: ./client
+    environment:
+      NOME_CLIENTE: Bob
+      SERVER_URL: http://servidor:5000
+    depends_on:
+      - servidor
+
+  cliente_carol:
+    build:
+      context: ./client
+    environment:
+      NOME_CLIENTE: Carol
+      SERVER_URL: http://servidor:5000
+    depends_on:
+      - servidor
